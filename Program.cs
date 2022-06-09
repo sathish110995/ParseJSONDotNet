@@ -6,6 +6,7 @@ Console.ReadLine();
 
 void parseJSON()
 {
+    #region Variable declaration
     string searchCondition = "";
     string jsonString = @"{
                            ""searchCriteria"": {
@@ -20,8 +21,9 @@ void parseJSON()
                                                ""SearchCondition"": ""history""
                                                }
                            }";
+    #endregion
 
-
+    #region Decouple data from Json
     using JsonDocument doc = JsonDocument.Parse(jsonString);
     var parentElement = doc.RootElement.GetProperty("searchCriteria");
     var props = parentElement.EnumerateObject();
@@ -35,7 +37,9 @@ void parseJSON()
                 break;
         }
     }
+    #endregion
 
+    #region Format and Create output Json
     var outputJSON = new
     {
         count = true,
@@ -43,5 +47,7 @@ void parseJSON()
     };
 
     string jsonData = JsonConvert.SerializeObject(outputJSON);
+    #endregion
+
     Console.WriteLine(jsonData);
 }
